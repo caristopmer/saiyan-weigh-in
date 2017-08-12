@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>SaiyanWeighIn</title>
+    <title>Saiyan Weigh-In</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
-    <%= yield %>
+    <header id="main-heading">
+      <h1>Saiyan Weigh-In</h1>
+      <ul id="navigation">
+        <li><%= link_to "Home", root_path %></li>
+        <% if logged_in? %>
+          <li><%= link_to "Profile", user_path(current_user) %></li>
+          <li><%= link_to "Log Out", sessions_path, method: "delete" %></li>
+        <% else %>
+          <li><%= link_to "Log In", new_session_path %></li>
+        <% end %>
+      </ul>
+    </header>
+    <div id="content">
+      <%= yield %>
+    </div>
   </body>
 </html>

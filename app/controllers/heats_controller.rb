@@ -1,0 +1,3 @@
+class HeatsController < ApplicationController
+
+end

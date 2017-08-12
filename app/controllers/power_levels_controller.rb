@@ -1,0 +1,3 @@
+class PowerLevelsController < ApplicationController
+
+end
