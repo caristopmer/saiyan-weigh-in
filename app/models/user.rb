@@ -2,6 +2,8 @@ class User < ApplicationRecord
   has_many :entries
   has_many :heats
   has_many :power_levels
+  has_many :memberships
+  has_many :teams, through: :memberships
   
   has_secure_password
 
