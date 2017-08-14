@@ -3,7 +3,19 @@ class SessionsController < ApplicationController
     @user = User.new
   end
 
-  def destroy
+  def create
+    @user = User.find_by(username: params[:session][:username])
+    if @user && @user.authenticate(params[:session][:password])
+      session[:user_id] = @user.id
+      redirect_to user_path(@user)
+    else
+      @errors = ["Incorrect Login Credentials"]
+      render :new      
+    end
+  end
 
+  def destroy
+    session[:user_id] = nil
+    redirect_to root_path
   end
 end
