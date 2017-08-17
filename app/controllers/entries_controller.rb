@@ -1,11 +1,36 @@
 class EntriesController < ApplicationController
   def create
-    @entry.entry_date = Date.today
+    @entry = Entry.new(entry_params)
+    @entry.user = current_user
+    @entry.weight_unit = "lbs."
     if @entry.save
-      redirect_to user_path(@user)
+      redirect_to user_path(@entry.user)
     else
       @errors = @entry.errors.full_messages
+      @user = @entry.user
       render "users/show"
     end
+  end
+
+  def edit
+    @entry = Entry.find(params[:id])
+  end
+
+  def update
+    
+  end
+
+  def destroy
+    @entry = Entry.find(params[:id])
+    if @entry.user == current_user
+      @entry.destroy
+      redirect_to user_path(current_user)
+    end
+  end
+
+  private
+
+  def entry_params
+    params.require(:entry).permit(:weight, :entry_date)
   end
 end

@@ -1,13 +1,20 @@
 <h2><%= @user.username %>'s profile page</h2>
 <h3>Weigh-In History</h3>
 <ul>
-  <% @user.entries.each do |entry| %>
+  <% @user.entries.order(entry_date: :desc).each do |entry| %>
     <li><%= render entry %></li>
   <% end %>
 </ul>
 
-<p>Enter Today's Weight:</p>
-<%= form_for @entry, url: entries_path do |f| %>
-  <%= f.text_field :weight %>
-  <%= f.submit "Submit" %>
+<% if @user == current_user %>
+  <p>Enter Today's Weight:</p>
+  <%= form_for :entry, url: entries_path do |f| %>
+    <% if @errors %>
+      <%= render 'layouts/errors' %>
+    <% end %>
+    
+    <%= f.text_field :weight %>
+    <%= f.date_field :entry_date, value: Date.today %>
+    <%= f.submit "Submit" %>
+  <% end %>
 <% end %>
