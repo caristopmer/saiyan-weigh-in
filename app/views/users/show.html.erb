@@ -18,3 +18,16 @@
     <%= f.submit "Submit" %>
   <% end %>
 <% end %>
+
+<h3><%= @user.username %>'s Teams</h3>
+<ul>
+  <% @user.teams.each do |team| %>
+    <li><%= link_to "#{team.name}", team_path(team)%></li>
+  <% end %>
+</ul>
+
+<% if @user == current_user %>
+  <%= link_to "Create New Team", new_team_path %>
+<% end %>
+
+
