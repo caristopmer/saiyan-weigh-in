@@ -5,3 +5,9 @@
     <li><%= render entry %></li>
   <% end %>
 </ul>
+
+<p>Enter Today's Weight:</p>
+<%= form_for @entry, url: entries_path do |f| %>
+  <%= f.text_field :weight %>
+  <%= f.submit "Submit" %>
+<% end %>

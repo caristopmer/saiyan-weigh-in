@@ -1,4 +1,3 @@
-require 'date'
 
 User.create(username: "izzlebeast", email: "chris@chris.com", password: "password", password_confirmation: "password", height: 74, height_unit: "inches")
 User.create(username: "AmandaH", email: "amanda@amanda.com", password: "password", password_confirmation: "password", height: 67, height_unit: "inches")
