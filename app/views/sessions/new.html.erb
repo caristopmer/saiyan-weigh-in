@@ -1,1 +1,13 @@
-<h1>login page</h1>
+<p>user login</p>
+<%= form_for(:session, url: "/sessions") do |f| %>
+  <% if @errors %>
+    <%= render 'layouts/errors' %>
+  <% end %>
+  <%= f.label "Username:" %>
+  <%= f.text_field :username %>
+
+  <%= f.label "Password:" %>
+  <%= f.password_field :password %>
+
+  <%= f.submit "Log In" %>
+<% end %>
