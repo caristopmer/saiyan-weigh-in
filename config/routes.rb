@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   post '/sessions' => 'sessions#create'
   delete '/sessions' => 'sessions#destroy'
   get '/users/:id' => 'users#show', as: "user"
+  get '/entries/new' => 'entries#new', as: "new_entry"
 end

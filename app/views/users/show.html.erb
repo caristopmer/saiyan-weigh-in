@@ -1,1 +1,7 @@
-<p><%= @user.username %>'s profile page</p>
+<h2><%= @user.username %>'s profile page</h2>
+<h3>Weigh-In History</h3>
+<ul>
+  <% @user.entries.each do |entry| %>
+    <li><%= render entry %></li>
+  <% end %>
+</ul>
