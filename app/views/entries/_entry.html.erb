@@ -1,6 +1,5 @@
 <p><%= entry.entry_date.strftime("%-m/%-d/%y") %>: <%= entry.weight %> lbs. 
 <% if entry.user == current_user %>
-  <%= link_to "Edit", edit_entry_path(entry) %> 
   <%= link_to "Delete", entry_path(entry), method: "delete" %>
 <% end %>
 </p>
