@@ -1,4 +1,13 @@
-<h2><%= @user.username %>'s profile page</h2>
+<h2><%= @user.username %>'s Profile Page</h2>
+<h3>Stats:</h3>
+<% entries = @user.entries.order(entry_date: :desc) %>
+<ul>
+    <li>Starting Weight: <%= entries.last.weight %> lbs. on <%= entries.last.entry_date.strftime("%-m/%-d/%y") %></li>
+    <li>Current Averaged Weight: <%= entries.first.average_weight %> lbs. on <%= entries.first.entry_date.strftime("%-m/%-d/%y") %></li>
+    <li>Last Month Change: <%= @user.change_over_period(4) %> lbs. (<%= @user.weekly_change(4) %> lbs./week)</li>
+    <li>All-Time Change: <%= @user.change_over_period %> lbs. (<%= @user.weekly_change %> lbs./week)</li>
+</ul>
+
 <h3>Weigh-In History</h3>
 <ul>
   <% @user.entries.order(entry_date: :desc).each do |entry| %>
@@ -13,7 +22,7 @@
       <%= render 'layouts/errors' %>
     <% end %>
     
-    <%= f.text_field :weight %>
+    <%= f.text_field :weight %> lbs. 
     <%= f.date_field :entry_date, value: Date.today %>
     <%= f.submit "Submit" %>
   <% end %>

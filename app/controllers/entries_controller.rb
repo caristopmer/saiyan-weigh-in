@@ -4,6 +4,8 @@ class EntriesController < ApplicationController
     @entry.user = current_user
     @entry.weight_unit = "lbs."
     if @entry.save
+      @entry.average_weight = @entry.calculate_average_weight
+      @entry.save
       redirect_to user_path(@entry.user)
     else
       @errors = @entry.errors.full_messages
@@ -11,13 +13,6 @@ class EntriesController < ApplicationController
       render "users/show"
     end
   end
-
-  # def edit
-  #   @entry = Entry.find(params[:id])
-  # end
-
-  # def update
-  # end
 
   def destroy
     @entry = Entry.find(params[:id])
