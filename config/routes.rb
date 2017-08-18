@@ -12,4 +12,10 @@ Rails.application.routes.draw do
   # get '/entries/:id/edit' => 'entries#edit',  as: "edit_entry"
   # patch '/entries/:id' => 'entries#update'
   delete '/entries/:id' => 'entries#destroy', as: "entry"
+
+  get '/teams' => 'teams#index', as: "teams"
+  get '/teams/new' => 'teams#new', as: "new_team"
+  post '/teams' => 'teams#create'
+  get '/teams/:id' => 'teams#show', as: "team"
+  delete '/teams/:id' => 'teams#destroy'
 end
