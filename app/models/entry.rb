@@ -27,6 +27,7 @@ class Entry < ApplicationRecord
   private
 
   def weight_averager(entries_array)
+    # may experiment here later with ActiveRecord .average() method, this separate method may be obsolete.
     weight_sum = entries_array.reduce(0) { |sum, entry| sum + entry.weight }
     weight_sum /= entries_array.count
     weight_sum.round(1)
