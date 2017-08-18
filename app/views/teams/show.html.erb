@@ -1,1 +1,12 @@
-team show page for <%= @team.name %>
+<h2><%= @team.name %></h2>
+
+<h3><%= @team.members.count %> Members:</h3>
+<ul>
+  <% @team.members.each do |member| %>
+    <li><%= link_to "#{member.username}", user_path(member) %> <%= "(Team Captain)" if member == @team.captain %></li>
+  <% end %>
+</ul>
+
+<% if @team.captain == current_user %>
+  <%= link_to "Delete Team", team_path(@team), method: "delete", data: { confirm: "Are you sure you want to delete team #{@team.name}? This cannot be undone." } %>
+<% end %>

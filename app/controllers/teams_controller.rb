@@ -24,7 +24,11 @@ class TeamsController < ApplicationController
   end
 
   def destroy
-    
+    @team = Team.find(params[:id])
+    if @team.captain == current_user
+      @team.destroy
+      redirect_to user_path(current_user)
+    end
   end
 
   private
