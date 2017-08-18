@@ -1,1 +1,12 @@
-new team form
+<h2>Create Team</h2>
+<%= form_for :team, url: teams_path do |f| %>
+  <% if @errors %>
+    <%= render 'layouts/errors' %>
+  <% end %>
+
+  <%= f.hidden_field :captain_id, value: current_user.id %>
+  <%= f.label "Team Name:" %><br>
+  <%= f.text_field :name %>
+  <%= f.submit "Create" %>
+
+<% end %>
