@@ -9,8 +9,6 @@ Rails.application.routes.draw do
 
   get '/entries/new' => 'entries#new', as: "new_entry"
   post '/entries' => 'entries#create'
-  # get '/entries/:id/edit' => 'entries#edit',  as: "edit_entry"
-  # patch '/entries/:id' => 'entries#update'
   delete '/entries/:id' => 'entries#destroy', as: "entry"
 
   get '/teams' => 'teams#index', as: "teams"

@@ -11,4 +11,24 @@ class Entry < ApplicationRecord
       errors.add(:entry_date, "cannot be in the future")
     end
   end
+
+  def calculate_average_weight
+    entries = self.user.entries.order(entry_date: :desc)
+    recent_entries = entries.where(["entry_date > ?", Date.today - 14])
+    if entries.count < 3
+      weight_averager(entries)
+    elsif !recent_entries || recent_entries.count < 4
+      weight_averager(entries.limit(3))
+    else
+      weight_averager(recent_entries.limit(6))
+    end
+  end
+
+  private
+
+  def weight_averager(entries_array)
+    weight_sum = entries_array.reduce(0) { |sum, entry| sum + entry.weight }
+    weight_sum /= entries_array.count
+    weight_sum.round(1)
+  end
 end
