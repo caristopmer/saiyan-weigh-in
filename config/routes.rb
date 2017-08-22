@@ -19,5 +19,5 @@ Rails.application.routes.draw do
 
   get '/heats' => 'heats#index', as: "heats"
   post '/heats' => 'heats#create'
-  delete '/heats/:id' => 'heats#destroy'
+  delete '/heats/:id' => 'heats#destroy', as: "heat"
 end

@@ -19,7 +19,6 @@
     <li><%= render entry %></li>
   <% end %>
 </ul>
-
 <% if @user == current_user %>
   <p>Enter Today's Weight:</p>
   <%= form_for :entry, url: entries_path do |f| %>
@@ -32,6 +31,26 @@
     <%= f.submit "Submit" %>
   <% end %>
 <% end %>
+
+<h3>Push-Up Heat History</h3>
+<ul>
+  <% @user.heats.order(entry_date: :desc).each do |heat| %>
+    <li><%= render heat %></li>
+  <% end %>
+</ul>
+<% if @user == current_user %>
+  <p>Enter Today's Heat Results:</p>
+  <%= form_for :heat, url: heats_path do |f| %>
+    <% if @errors %>
+      <%= render 'layouts/errors' %>
+    <% end %>
+    
+    <%= f.text_field :count %> push-ups completed. 
+    <%= f.date_field :entry_date, value: Date.today %>
+    <%= f.submit "Submit" %>
+  <% end %>
+<% end %>
+
 
 <h3><%= @user.username %>'s Teams</h3>
 <ul>

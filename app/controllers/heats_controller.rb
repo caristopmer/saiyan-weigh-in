@@ -5,6 +5,9 @@ class HeatsController < ApplicationController
 
   def create
     @heat = Heat.new(heat_params)
+    # pushup type and duration set here until support for user selection is added.
+    @heat.pushup_type = "knee"
+    @heat.length = 30
     @heat.user = current_user
     if @heat.save
       redirect_to user_path(@heat.user)
@@ -23,6 +26,6 @@ class HeatsController < ApplicationController
   private
 
   def heat_params
-    params.require(:heat).permit(:pushup_type, :length, :count)
+    params.require(:heat).permit(:count, :entry_date)
   end
 end
