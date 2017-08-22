@@ -1,0 +1,10 @@
+body {
+  background-image: url("namek-background.png");
+  background-size: cover;
+  background-attachment: fixed;
+  background-color: #329a20;
+}
+
+#content {
+  /*background-color: white;*/
+}
