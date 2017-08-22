@@ -21,13 +21,13 @@ class User < ApplicationRecord
 
   def weekly_change(weeks = nil)
     if weeks
-      delta = change_over_period(weeks) / weeks
-    else
-      if total_weeks < 4
-        delta = change_over_period(weeks) / 4
-      else
+      if weeks > total_weeks
         delta = change_over_period(weeks) / total_weeks
+      else
+        delta = change_over_period(weeks) / weeks
       end
+    else
+      delta = change_over_period / total_weeks
     end
     delta.round(2)
   end
