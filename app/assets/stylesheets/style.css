@@ -1,3 +1,15 @@
+/*font-family: 'Permanent Marker', cursive; title
+font-family: 'Nunito', sans-serif; all
+font-family: 'Orbitron', sans-serif; headers*/
+
+h1#main-title {
+  font-family: 'Permanent Marker', cursive;
+}
+
+h2, h3 {
+  font-family: 'Orbitron', sans-serif; 
+}
+
 body {
   background-image: url("namek-background.png");
   background-size: cover;
