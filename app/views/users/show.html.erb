@@ -2,7 +2,7 @@
 <h3>Stats:</h3>
 <% if @user.entries.count > 0 %>
   <% entries = @user.entries.order(entry_date: :desc) %>
-  <ul>
+  <ul class="stats-list">
     <li>Starting Weight: <%= entries.last.weight %> lbs. on <%= entries.last.entry_date.strftime("%-m/%-d/%y") %></li>
     <li>Current Averaged Weight: <%= entries.first.average_weight %> lbs. on <%= entries.first.entry_date.strftime("%-m/%-d/%y") %></li>
     <li>Last Month Change: <%= @user.change_over_period(4) %> lbs. (<%= @user.weekly_change(4) %> lbs./week)</li>
@@ -12,55 +12,67 @@
   <p>Start logging your weight to see statistics!</p>
 <% end %>
 
+<div class="chart-container">
+  <p>this is a chart</p>
+</div>
 
-<h3>Weigh-In History</h3>
-<ul>
-  <% @user.entries.order(entry_date: :desc).each do |entry| %>
-    <li><%= render entry %></li>
-  <% end %>
-</ul>
-<% if @user == current_user %>
-  <p>Enter Today's Weight:</p>
-  <%= form_for :entry, url: entries_path do |f| %>
-    <% if @errors %>
-      <%= render 'layouts/errors' %>
+<div class="weights-container">
+  <h3>Weigh-In History</h3>
+  <ul>
+    <% @user.entries.order(entry_date: :desc).each do |entry| %>
+      <li><%= render entry %></li>
     <% end %>
-    
-    <%= f.text_field :weight %> lbs. 
-    <%= f.date_field :entry_date, value: Date.today %>
-    <%= f.submit "Submit" %>
-  <% end %>
-<% end %>
-
-<h3>Push-Up Heat History</h3>
-<ul>
-  <% @user.heats.order(entry_date: :desc).each do |heat| %>
-    <li><%= render heat %></li>
-  <% end %>
-</ul>
-<% if @user == current_user %>
-  <p>Enter Today's Heat Results:</p>
-  <%= form_for :heat, url: heats_path do |f| %>
-    <% if @errors %>
-      <%= render 'layouts/errors' %>
+  </ul>
+  <% if @user == current_user %>
+    <p>Enter Today's Weight:</p>
+    <%= form_for :entry, url: entries_path do |f| %>
+      <% if @errors %>
+        <%= render 'layouts/errors' %>
+      <% end %>
+      
+      <%= f.text_field :weight %> lbs. 
+      <%= f.date_field :entry_date, value: Date.today %>
+      <%= f.submit "Submit" %>
     <% end %>
-    
-    <%= f.text_field :count %> push-ups completed. 
-    <%= f.date_field :entry_date, value: Date.today %>
-    <%= f.submit "Submit" %>
   <% end %>
-<% end %>
+</div>
 
-
-<h3><%= @user.username %>'s Teams</h3>
-<ul>
-  <% @user.teams.each do |team| %>
-    <li><%= link_to "#{team.name}", team_path(team)%></li>
+<div class="heats-container">
+  <h3>Push-Up Heat History</h3>
+  <ul>
+    <% @user.heats.order(entry_date: :desc).each do |heat| %>
+      <li><%= render heat %></li>
+    <% end %>
+  </ul>
+  <% if @user == current_user %>
+    <p>Enter Today's Heat Results:</p>
+    <%= form_for :heat, url: heats_path do |f| %>
+      <% if @errors %>
+        <%= render 'layouts/errors' %>
+      <% end %>
+      
+      <%= f.text_field :count %> push-ups completed. 
+      <%= f.date_field :entry_date, value: Date.today %>
+      <%= f.submit "Submit" %>
+    <% end %>
   <% end %>
-</ul>
+</div>
 
-<% if @user == current_user %>
-  <%= link_to "Create New Team", new_team_path %>
-<% end %>
+<div class="power-levels-container">
+  <p>power levels container</p>
+</div>
+
+<div class="teams-container">
+  <h3><%= @user.username %>'s Teams</h3>
+  <ul>
+    <% @user.teams.each do |team| %>
+      <li><%= link_to "#{team.name}", team_path(team)%></li>
+    <% end %>
+  </ul>
+
+  <% if @user == current_user %>
+    <%= link_to "Create New Team", new_team_path %>
+  <% end %>
+</div>
 
 
