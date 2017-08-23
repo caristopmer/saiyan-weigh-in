@@ -13,7 +13,7 @@
 <% end %>
 
 <div class="chart-container">
-  <p>this is a chart</p>
+  <%= line_chart @user.entries.pluck(:entry_date, :weight), min: nil, max: nil %>
 </div>
 
 <div class="weights-container">

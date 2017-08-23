@@ -33,6 +33,13 @@ class User < ApplicationRecord
     delta.round(2)
   end
 
+  def entries_hash
+    hash = {}
+    self.entries.map do |entry|
+      hash[entry.entry_date.to_s] = entry.weight
+    end
+  end
+
   private
 
   def total_weeks
