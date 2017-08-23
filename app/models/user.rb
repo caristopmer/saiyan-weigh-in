@@ -16,7 +16,8 @@ class User < ApplicationRecord
     else
       entries = self.entries.order(entry_date: :desc)
     end
-    (entries.first.average_weight - entries.last.weight).round(2)
+    return (entries.first.average_weight - entries.last.weight).round(2) if entries.count > 0
+    0.00
   end
 
   def weekly_change(weeks = nil)

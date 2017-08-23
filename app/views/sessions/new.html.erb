@@ -1,4 +1,4 @@
-<p>user login</p>
+<h2>User Login</h2>
 <%= form_for(:session, url: "/sessions") do |f| %>
   <% if @errors %>
     <%= render 'layouts/errors' %>
@@ -9,6 +9,6 @@
 
   <%= f.label "Password:" %>
   <%= f.password_field :password %>
-
+  
   <%= f.submit "Log In" %>
 <% end %>

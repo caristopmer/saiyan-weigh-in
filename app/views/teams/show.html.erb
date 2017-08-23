@@ -1,9 +1,11 @@
 <h2><%= @team.name %></h2>
 
+<h3>Total Team Weight Change: <%= @team.total_team_weight_change %> Pounds</h3>
+
 <h3><%= @team.members.count %> Members:</h3>
 <ul>
   <% @team.members.each do |member| %>
-    <li><%= link_to "#{member.username}", user_path(member) %> <%= "(Team Captain)" if member == @team.captain %></li>
+    <li><%= link_to "#{member.username}", user_path(member) %>, <%= member.change_over_period %> lbs. <%= "(Team Captain)" if member == @team.captain %></li>
   <% end %>
 </ul>
 
