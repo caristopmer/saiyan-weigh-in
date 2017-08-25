@@ -12,10 +12,23 @@
   <p>Start logging your weight to see statistics!</p>
 <% end %>
 
+<div class="chart-selection-buttons">
+  <%= button_tag "Weight", id: "weight-button", class: "chart-button" %>
+  <%= button_tag "Push-Ups", id: "pushups-button", class: "chart-button" %>
+  <%= button_tag "Power Level", id: "power-levels-button", class: "chart-button" %>
+</div>
+
 <div class="chart-container">
   <%= line_chart @user.weight_lines.map { |name, data|
     { name: name, data: data }
   }, min: nil, max: nil %>
+</div>
+
+<div class="chart-buttons">
+  <%= button_tag "Past Month", id: "1-month-button", class: "chart-button" %>
+  <%= button_tag "3 Months", id: "3-month-button", class: "chart-button" %>
+  <%= button_tag "6 Months", id: "6-month-button", class: "chart-button" %>
+  <%= button_tag "All Time", id: "all-time-button", class: "chart-button" %>
 </div>
 
 <div class="weights-container">
