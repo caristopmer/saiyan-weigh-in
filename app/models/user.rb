@@ -33,11 +33,11 @@ class User < ApplicationRecord
     delta.round(2)
   end
 
-  def entries_hash
+  def weight_lines
     hash = {}
-    self.entries.map do |entry|
-      hash[entry.entry_date.to_s] = entry.weight
-    end
+    hash["Weight"] = self.entries.pluck(:entry_date, :weight)
+    hash["Average Weight"] = self.entries.pluck(:entry_date, :average_weight)
+    hash
   end
 
   private

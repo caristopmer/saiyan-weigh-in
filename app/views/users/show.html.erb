@@ -13,7 +13,9 @@
 <% end %>
 
 <div class="chart-container">
-  <%= line_chart @user.entries.pluck(:entry_date, :weight), min: nil, max: nil %>
+  <%= line_chart @user.weight_lines.map { |name, data|
+    { name: name, data: data }
+  }, min: nil, max: nil %>
 </div>
 
 <div class="weights-container">
