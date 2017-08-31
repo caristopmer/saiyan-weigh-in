@@ -1,7 +1,9 @@
 $(document).ready(function() {
+  var displayStat = "weight";
+  var displayTime = "one";
 
   $("#1-month-button").on("click", function() {
-    $(".chart-container").text("<%= line_chart @user.weight_lines.map { |name, data| { name: name, data: data }}, min: nil, max: nil %>");
+    $(".chart-container").html();
   });
 
   $("#3-month-button").on("click", function() {
