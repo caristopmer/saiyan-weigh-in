@@ -4,6 +4,6 @@ class ChartsController < ApplicationController
     stat = params[:stat]
     time = params[:time].to_i
 
-    line_chart @user.chart_lines(stat, time).map { |name, data| { name: name, data: data }}, min: nil, max: nil
+    render "charts/_chart", locals: { user: @user, stat: stat, time: time }, layout: false
   end
 end
