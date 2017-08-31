@@ -20,4 +20,6 @@ Rails.application.routes.draw do
   get '/heats' => 'heats#index', as: "heats"
   post '/heats' => 'heats#create'
   delete '/heats/:id' => 'heats#destroy', as: "heat"
+
+  get '/users/:id/:stat/:time' => 'charts#display'
 end
