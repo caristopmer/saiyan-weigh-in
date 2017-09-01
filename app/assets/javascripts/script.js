@@ -30,13 +30,35 @@ $(document).ready(function() {
     chartAjaxRequest(buildUrl(thisButton));
   });
 
+
+  $("#weight-button").on("click", function() {
+    event.preventDefault();
+    displayStat = "weight";
+    var thisButton = $(this);
+    chartAjaxRequest(buildUrl(thisButton));
+  });
+
+  $("#pushups-button").on("click", function() {
+    event.preventDefault();
+    displayStat = "push_ups";
+    var thisButton = $(this);
+    chartAjaxRequest(buildUrl(thisButton));
+  });
+
+  $("#power-levels-button").on("click", function() {
+    event.preventDefault();
+    displayStat = "power_levels";
+    var thisButton = $(this);
+    chartAjaxRequest(buildUrl(thisButton));
+  });
+
+
+
   function buildUrl(thisButton) {
     return thisButton.closest("form").attr("action") + '/' + displayStat + '/' + displayTime;
   }
 
   function chartAjaxRequest(requestUrl) {
-    console.log("getting here")
-    console.log(requestUrl)
     $.ajax({
       url: requestUrl
     })
