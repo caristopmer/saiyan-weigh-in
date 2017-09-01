@@ -44,7 +44,7 @@
   </ul>
   <% if @user == current_user %>
     <p>Enter Today's Weight:</p>
-    <%= form_for :entry, url: entries_path do |f| %>
+    <%= form_for :entry, url: entries_path(@user) do |f| %>
       <% if @errors %>
         <%= render 'layouts/errors' %>
       <% end %>
@@ -65,7 +65,7 @@
   </ul>
   <% if @user == current_user %>
     <p>Enter Today's Heat Results:</p>
-    <%= form_for :heat, url: heats_path do |f| %>
+    <%= form_for :heat, url: heats_path(@user) do |f| %>
       <% if @errors %>
         <%= render 'layouts/errors' %>
       <% end %>
