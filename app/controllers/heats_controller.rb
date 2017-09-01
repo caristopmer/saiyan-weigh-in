@@ -1,6 +1,7 @@
 class HeatsController < ApplicationController
   def index
-    @heats = Heat.all
+    @user = User.find(params[:id])
+    @heats = @user.heats
   end
 
   def create

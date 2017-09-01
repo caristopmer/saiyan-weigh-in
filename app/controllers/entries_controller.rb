@@ -1,4 +1,9 @@
 class EntriesController < ApplicationController
+  def index
+    @user = User.find(params[:id])
+    @entries = @user.entries
+  end
+
   def create
     @entry = Entry.new(entry_params)
     @entry.user = User.find(params[:id])
