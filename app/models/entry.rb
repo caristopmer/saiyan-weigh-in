@@ -13,8 +13,8 @@ class Entry < ApplicationRecord
   end
 
   def calculate_average_weight
-    entries = self.user.entries.order(entry_date: :desc)
-    recent_entries = entries.where(["entry_date > ?", Date.today - 14])
+    entries = self.user.entries.where(["entry_date <= ?", self.entry_date]).order(entry_date: :desc)
+    recent_entries = entries.where(["entry_date > ?", self.entry_date - 14])
     if entries.count < 3
       weight_averager(entries)
     elsif !recent_entries || recent_entries.count < 4

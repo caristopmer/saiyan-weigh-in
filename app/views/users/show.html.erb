@@ -12,20 +12,39 @@
   <p>Start logging your weight to see statistics!</p>
 <% end %>
 
+<div class="chart-selection-buttons">
+  <%= form_tag(user_path(current_user), method: "get") do %>
+    <%= button_tag "Weight", id: "weight-button", class: "chart-button" %>
+    <%= button_tag "Push-Ups", id: "pushups-button", class: "chart-button" %>
+    <%= button_tag "Power Level", id: "power-levels-button", class: "chart-button" %>
+  <% end %>
+</div>
+
 <div class="chart-container">
-  <p>this is a chart</p>
+  <%= line_chart @user.chart_lines("weight", 1).map { |name, data|
+    { name: name, data: data }
+  }, min: nil, max: nil %>
+</div>
+
+<div class="chart-buttons">
+  <%= form_tag(user_path(current_user), method: "get") do %>
+    <%= button_tag "Past Month", id: "1-month-button", class: "chart-button" %>
+    <%= button_tag "3 Months", id: "3-month-button", class: "chart-button" %>
+    <%= button_tag "6 Months", id: "6-month-button", class: "chart-button" %>
+    <%= button_tag "All Time", id: "all-time-button", class: "chart-button" %>
+  <% end %>
 </div>
 
 <div class="weights-container">
   <h3>Weigh-In History</h3>
   <ul>
-    <% @user.entries.order(entry_date: :desc).each do |entry| %>
+    <% @user.entries.order(entry_date: :desc).limit(10).each do |entry| %>
       <li><%= render entry %></li>
     <% end %>
   </ul>
   <% if @user == current_user %>
     <p>Enter Today's Weight:</p>
-    <%= form_for :entry, url: entries_path do |f| %>
+    <%= form_for :entry, url: entries_path(@user) do |f| %>
       <% if @errors %>
         <%= render 'layouts/errors' %>
       <% end %>
@@ -40,13 +59,13 @@
 <div class="heats-container">
   <h3>Push-Up Heat History</h3>
   <ul>
-    <% @user.heats.order(entry_date: :desc).each do |heat| %>
+    <% @user.heats.order(entry_date: :desc).limit(10).each do |heat| %>
       <li><%= render heat %></li>
     <% end %>
   </ul>
   <% if @user == current_user %>
     <p>Enter Today's Heat Results:</p>
-    <%= form_for :heat, url: heats_path do |f| %>
+    <%= form_for :heat, url: heats_path(@user) do |f| %>
       <% if @errors %>
         <%= render 'layouts/errors' %>
       <% end %>
@@ -74,5 +93,3 @@
     <%= link_to "Create New Team", new_team_path %>
   <% end %>
 </div>
-
-
