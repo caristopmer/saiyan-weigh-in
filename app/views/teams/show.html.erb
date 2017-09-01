@@ -5,10 +5,18 @@
 <h3><%= @team.members.count %> Members:</h3>
 <ul>
   <% @team.members.each do |member| %>
-    <li><%= link_to "#{member.username}", user_path(member) %>, <%= member.change_over_period %> lbs. <%= "(Team Captain)" if member == @team.captain %></li>
+    <li><%= link_to "#{member.username}", user_path(member) %>  <%= member.change_over_period %> lbs. <%= "(Team Captain)" if member == @team.captain %></li>
   <% end %>
 </ul>
 
-<% if @team.captain == current_user %>
+<% if @errors %>
+  <%= render 'layouts/errors' %>
+<% end %>
+
+<% if !@team.members.include?(current_user) %>
+  <%= link_to "Join Team", memberships_path(@team), method: "post" %>
+<% elsif @team.captain == current_user%>
   <%= link_to "Delete Team", team_path(@team), method: "delete", data: { confirm: "Are you sure you want to delete team #{@team.name}? This cannot be undone." } %>
+<% else %>
+  <%= link_to "Leave Team", memberships_path(@team), method: "delete", data: { confirm: "Are you sure you want to leave team #{@team.name}?" } %>
 <% end %>
