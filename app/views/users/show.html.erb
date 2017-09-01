@@ -38,7 +38,7 @@
 <div class="weights-container">
   <h3>Weigh-In History</h3>
   <ul>
-    <% @user.entries.order(entry_date: :desc).each do |entry| %>
+    <% @user.entries.order(entry_date: :desc).limit(10).each do |entry| %>
       <li><%= render entry %></li>
     <% end %>
   </ul>
@@ -59,7 +59,7 @@
 <div class="heats-container">
   <h3>Push-Up Heat History</h3>
   <ul>
-    <% @user.heats.order(entry_date: :desc).each do |heat| %>
+    <% @user.heats.order(entry_date: :desc).limit(10).each do |heat| %>
       <li><%= render heat %></li>
     <% end %>
   </ul>
@@ -93,5 +93,3 @@
     <%= link_to "Create New Team", new_team_path %>
   <% end %>
 </div>
-
-
