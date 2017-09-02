@@ -35,6 +35,12 @@
   <% end %>
 </div>
 
+<p id="entry-disclaimer">(Note: For most accurate average weight calculation, please make entries in chronological order from oldest to newest)</p>
+
+<% if @errors %>
+  <%= render 'layouts/errors' %>
+<% end %>
+
 <div class="weights-container">
   <h3>Weigh-In History</h3>
   <ul>
@@ -42,14 +48,14 @@
       <li><%= render entry %></li>
     <% end %>
   </ul>
-  <%= link_to "View All", entries_path(@user) %>
+
+  <% if @user.entries.count > 5 %>
+    <%= link_to "View All", entries_path(@user) %>
+  <% end %>
+
   <% if @user == current_user %>
     <p>Enter Today's Weight:</p>
     <%= form_for :entry, url: entries_path(@user) do |f| %>
-      <% if @errors %>
-        <%= render 'layouts/errors' %>
-      <% end %>
-      
       <%= f.text_field :weight %> lbs. 
       <%= f.date_field :entry_date, value: Date.today %>
       <%= f.submit "Submit" %>
@@ -64,14 +70,14 @@
       <li><%= render heat %></li>
     <% end %>
   </ul>
-  <%= link_to "View All", heats_path(@user) %>
+
+  <% if @user.heats.count > 5 %>
+    <%= link_to "View All", heats_path(@user) %>
+  <% end %>
+
   <% if @user == current_user %>
     <p>Enter Today's Heat Results:</p>
-    <%= form_for :heat, url: heats_path(@user) do |f| %>
-      <% if @errors %>
-        <%= render 'layouts/errors' %>
-      <% end %>
-      
+    <%= form_for :heat, url: heats_path(@user) do |f| %>      
       <%= f.text_field :count %> completed. 
       <%= f.date_field :entry_date, value: Date.today %>
       <%= f.submit "Submit" %>
