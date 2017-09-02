@@ -16,7 +16,8 @@ class User < ApplicationRecord
     else
       entries = self.entries.order(entry_date: :desc)
     end
-    (entries.first.average_weight - entries.last.weight).round(2)
+    return (entries.first.average_weight - entries.last.weight).round(2) if entries.count > 0
+    0.00
   end
 
   def weekly_change(weeks = nil)
@@ -30,6 +31,34 @@ class User < ApplicationRecord
       delta = change_over_period / total_weeks
     end
     delta.round(2)
+  end
+
+  def chart_lines(stat, months)
+    hash = {}
+    if months != 0
+      if stat == "weight"
+        hash["Weight"] = self.entries.where(["entry_date >= ?", Date.today - (months * 30)]).pluck(:entry_date, :weight)
+        hash["Average Weight"] = self.entries.where(["entry_date >= ?", Date.today - (months * 30)]).pluck(:entry_date, :average_weight)
+      elsif stat == "push_ups"
+        hash["Push-Ups"] = self.heats.where(["entry_date >= ?", Date.today - (months * 30)]).pluck(:entry_date, :count)
+        hash["Average Push-Ups"] = self.heats.where(["entry_date >= ?", Date.today - (months * 30)]).pluck(:entry_date, :average_pushups)
+      elsif stat == "power_levels"
+        hash["Power Level"] = self.power_levels.where(["entry_date >= ?", Date.today - (months * 30)]).pluck(:entry_date, :level)
+        hash["Average Power Level"] = self.power_levels.where(["entry_date >= ?", Date.today - (months * 30)]).pluck(:entry_date, :average_level)
+      end
+    else
+      if stat == "weight"
+        hash["Weight"] = self.entries.pluck(:entry_date, :weight)
+        hash["Average Weight"] = self.entries.pluck(:entry_date, :average_weight)
+      elsif stat == "push_ups"
+        hash["Push-Ups"] = self.heats.pluck(:entry_date, :count)
+        hash["Average Push-Ups"] = self.heats.pluck(:entry_date, :average_pushups)
+      elsif stat == "power_levels"
+        hash["Power Level"] = self.power_levels.pluck(:entry_date, :level)
+        hash["Average Power Level"] = self.power_levels.pluck(:entry_date, :average_level)
+      end
+    end
+    hash
   end
 
   private

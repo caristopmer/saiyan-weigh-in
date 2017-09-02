@@ -1,15 +1,18 @@
 class HeatsController < ApplicationController
   def index
-    @heats = Heat.all
+    @user = User.find(params[:id])
+    @heats = @user.heats
   end
 
   def create
     @heat = Heat.new(heat_params)
+    @heat.user = User.find(params[:id])
     # pushup type and duration set here until support for user selection is added.
     @heat.pushup_type = "knee"
     @heat.length = 30
-    @heat.user = current_user
     if @heat.save
+      @heat.average_pushups = @heat.calculate_average_pushups
+      @heat.save
       redirect_to user_path(@heat.user)
     else
       @errors = @heat.errors.full_messages

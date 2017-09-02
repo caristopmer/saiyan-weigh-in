@@ -1,7 +1,12 @@
 class EntriesController < ApplicationController
+  def index
+    @user = User.find(params[:id])
+    @entries = @user.entries
+  end
+
   def create
     @entry = Entry.new(entry_params)
-    @entry.user = current_user
+    @entry.user = User.find(params[:id])
     @entry.weight_unit = "lbs."
     if @entry.save
       @entry.average_weight = @entry.calculate_average_weight

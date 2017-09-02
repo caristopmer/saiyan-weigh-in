@@ -1,6 +1,6 @@
-<h2>Push-Up Heats Index</h2>
+<h2><%= @user.username %>'s Heats</h2>
 <ul>
-  <% @heats.order(count: :desc).each do |heat| %>
-    <li><%= render heat %>, <%= link_to "#{heat.user.username}", user_path(heat.user) %></li>
+  <% @heats.each do |heat| %>
+    <li><%= render heat %></li>
   <% end %>
 </ul>

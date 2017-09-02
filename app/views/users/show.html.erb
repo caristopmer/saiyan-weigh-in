@@ -2,7 +2,7 @@
 <h3>Stats:</h3>
 <% if @user.entries.count > 0 %>
   <% entries = @user.entries.order(entry_date: :desc) %>
-  <ul>
+  <ul class="stats-list">
     <li>Starting Weight: <%= entries.last.weight %> lbs. on <%= entries.last.entry_date.strftime("%-m/%-d/%y") %></li>
     <li>Current Averaged Weight: <%= entries.first.average_weight %> lbs. on <%= entries.first.entry_date.strftime("%-m/%-d/%y") %></li>
     <li>Last Month Change: <%= @user.change_over_period(4) %> lbs. (<%= @user.weekly_change(4) %> lbs./week)</li>
@@ -12,55 +12,94 @@
   <p>Start logging your weight to see statistics!</p>
 <% end %>
 
-
-<h3>Weigh-In History</h3>
-<ul>
-  <% @user.entries.order(entry_date: :desc).each do |entry| %>
-    <li><%= render entry %></li>
+<div class="chart-selection-buttons">
+  <%= form_tag(user_path(current_user), method: "get") do %>
+    <%= button_tag "Weight", id: "weight-button", class: "chart-button" %>
+    <%= button_tag "Push-Ups", id: "pushups-button", class: "chart-button" %>
+    <%= button_tag "Power Level", id: "power-levels-button", class: "chart-button" %>
   <% end %>
-</ul>
-<% if @user == current_user %>
-  <p>Enter Today's Weight:</p>
-  <%= form_for :entry, url: entries_path do |f| %>
-    <% if @errors %>
-      <%= render 'layouts/errors' %>
+</div>
+
+<div class="chart-container">
+  <%= line_chart @user.chart_lines("weight", 1).map { |name, data|
+    { name: name, data: data }
+  }, min: nil, max: nil %>
+</div>
+
+<div class="chart-buttons">
+  <%= form_tag(user_path(current_user), method: "get") do %>
+    <%= button_tag "Past Month", id: "1-month-button", class: "chart-button" %>
+    <%= button_tag "3 Months", id: "3-month-button", class: "chart-button" %>
+    <%= button_tag "6 Months", id: "6-month-button", class: "chart-button" %>
+    <%= button_tag "All Time", id: "all-time-button", class: "chart-button" %>
+  <% end %>
+</div>
+
+<p id="entry-disclaimer">(Note: For most accurate average weight calculation, please make entries in chronological order from oldest to newest)</p>
+
+<% if @errors %>
+  <%= render 'layouts/errors' %>
+<% end %>
+
+<div class="weights-container">
+  <h3>Weigh-In History</h3>
+  <ul>
+    <% @user.entries.order(entry_date: :desc).limit(5).each do |entry| %>
+      <li><%= render entry %></li>
     <% end %>
-    
-    <%= f.text_field :weight %> lbs. 
-    <%= f.date_field :entry_date, value: Date.today %>
-    <%= f.submit "Submit" %>
-  <% end %>
-<% end %>
+  </ul>
 
-<h3>Push-Up Heat History</h3>
-<ul>
-  <% @user.heats.order(entry_date: :desc).each do |heat| %>
-    <li><%= render heat %></li>
+  <% if @user.entries.count > 5 %>
+    <%= link_to "View All", entries_path(@user) %>
   <% end %>
-</ul>
-<% if @user == current_user %>
-  <p>Enter Today's Heat Results:</p>
-  <%= form_for :heat, url: heats_path do |f| %>
-    <% if @errors %>
-      <%= render 'layouts/errors' %>
+
+  <% if @user == current_user %>
+    <p>Enter Today's Weight:</p>
+    <%= form_for :entry, url: entries_path(@user) do |f| %>
+      <%= f.text_field :weight %> lbs. 
+      <%= f.date_field :entry_date, value: Date.today %>
+      <%= f.submit "Submit" %>
     <% end %>
-    
-    <%= f.text_field :count %> push-ups completed. 
-    <%= f.date_field :entry_date, value: Date.today %>
-    <%= f.submit "Submit" %>
   <% end %>
-<% end %>
+</div>
 
+<div class="heats-container">
+  <h3>Push-Up Heat History</h3>
+  <ul>
+    <% @user.heats.order(entry_date: :desc).limit(5).each do |heat| %>
+      <li><%= render heat %></li>
+    <% end %>
+  </ul>
 
-<h3><%= @user.username %>'s Teams</h3>
-<ul>
-  <% @user.teams.each do |team| %>
-    <li><%= link_to "#{team.name}", team_path(team)%></li>
+  <% if @user.heats.count > 5 %>
+    <%= link_to "View All", heats_path(@user) %>
   <% end %>
-</ul>
 
-<% if @user == current_user %>
-  <%= link_to "Create New Team", new_team_path %>
-<% end %>
+  <% if @user == current_user %>
+    <p>Enter Today's Heat Results:</p>
+    <%= form_for :heat, url: heats_path(@user) do |f| %>      
+      <%= f.text_field :count %> completed. 
+      <%= f.date_field :entry_date, value: Date.today %>
+      <%= f.submit "Submit" %>
+    <% end %>
+  <% end %>
+</div>
 
+<div class="power-levels-container">
+  <h3>Power Levels History</h3>
+  <p>Coming Soon!</p>
+</div>
 
+<div class="teams-container">
+  <h3><%= @user.username %>'s Teams</h3>
+  <ul>
+    <% @user.teams.each do |team| %>
+      <li><%= link_to "#{team.name}", team_path(team)%></li>
+    <% end %>
+  </ul>
+
+  <% if @user == current_user %>
+    <%= link_to "Join A Team", teams_path %><br>
+    <%= link_to "Create New Team", new_team_path %>
+  <% end %>
+</div>
