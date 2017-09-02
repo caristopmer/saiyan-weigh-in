@@ -25,5 +25,9 @@ Rails.application.routes.draw do
   post '/users/:id/heats' => 'heats#create'
   delete '/users/:user_id/heats/:id' => 'heats#destroy', as: "heat"
 
+  get '/users/:id/power_levels' => 'power_levels#index', as: "power_levels"
+  post '/users/:id/power_levels' => 'power_levels#create'
+  delete '/users/:user_id/power_levels/:id' => 'power_levels#destroy', as: "power_level"
+
   get '/users/:id/:stat/:time' => 'charts#display'
 end

@@ -2,12 +2,22 @@ class PowerLevel < ApplicationRecord
   belongs_to :user
 
   validates :user_id, :level, :entry_date, presence: true
+  validates :entry_date, uniqueness: { scope: :user_id,
+    message: "Only one power level may be calculated per day." }
+  validate :entry_date_cannot_be_in_the_future
 
-  # user decides to calculate their power level on a specified date
-  # post request is made to power levels
-  # power level is created for currently logged in user
-  # level is determined from that user's data at time of entry date
-  # current bmi points act as multiplier and set a baseline, each pushup adds points to power level as multiplied by bmi multiplier
+  def entry_date_cannot_be_in_the_future
+    if entry_date > Date.today
+      errors.add(:entry_date, "cannot be in the future")
+    end
+  end
+
+  def calculate_level
+    return nil if pushup_points == nil || bmi == nil
+    raw_level = 5000 + pushup_points
+    bmi_multiplier = 1 - (((bmi - 22.0).abs / 22.0) * 2)
+    raw_level * bmi_multiplier
+  end
 
   def calculate_average_level
     levels = self.user.power_levels.where(["entry_date <= ?", self.entry_date]).order(entry_date: :desc)
@@ -25,8 +35,31 @@ class PowerLevel < ApplicationRecord
 
   def levels_averager(levels_array)
     # may experiment here later with ActiveRecord .average() method, this separate method may be obsolete.
-    levels_sum = levels_array.reduce(0.0) { |sum, level| sum + level.count }
+    levels_sum = levels_array.reduce(0.0) { |sum, level| sum + level.level }
     levels_sum /= levels_array.count
     levels_sum.round
+  end
+
+  def bmi
+    relevant_entries = self.user.entries.where(["entry_date >= ? and entry_date <= ?", self.entry_date - 7, self.entry_date]).order(entry_date: :desc)
+    return nil if relevant_entries.count == 0
+
+    weight = relevant_entries.first.average_weight
+    height = self.user.height
+
+    current_bmi = (weight / (height * height)) * 703.0
+    current_bmi.round(2)
+  end
+
+  def pushup_points
+    relevant_heats = self.user.heats.where(["entry_date >= ? and entry_date <= ?", self.entry_date - 3, self.entry_date]).order(entry_date: :desc)
+    return nil if relevant_heats.count == 0
+
+    last_heat = relevant_heats.first
+    if last_heat.pushup_type == "knee"
+      last_heat.count * 100
+    else
+      last_heat.count * 175
+    end
   end
 end
