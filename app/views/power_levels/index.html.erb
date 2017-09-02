@@ -1,0 +1,6 @@
+<h2><%= @user.username %>'s Power Levels</h2>
+<ul>
+  <% @levels.order(entry_date: :desc).each do |power_level| %>
+    <li><%= render power_level %></li>
+  <% end %>
+</ul>
