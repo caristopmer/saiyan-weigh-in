@@ -6,6 +6,7 @@ class Team < ApplicationRecord
   validates :name, :captain_id, presence: true
 
   def total_team_weight_change
-    self.members.reduce(0) { |sum, member| sum + member.change_over_period }
+    change = self.members.reduce(0) { |sum, member| sum + member.change_over_period }
+    change.round(2)
   end
 end
