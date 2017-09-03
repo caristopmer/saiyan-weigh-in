@@ -15,7 +15,7 @@ class PowerLevelsController < ApplicationController
       redirect_to user_path(@level.user)
     else
       @errors = @level.errors.full_messages
-      @errors << "Calculating power level require a weight entry within the past week and a push-up heat within the past 3 days." if @level.level == nil
+      @errors = ["Calculating power level require a weight entry within the past week and a push-up heat within the past 3 days."] if @level.level == nil
       render "users/show"
     end
   end

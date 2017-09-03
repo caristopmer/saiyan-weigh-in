@@ -8,9 +8,8 @@ class HeatsController < ApplicationController
     @heat = Heat.new(heat_params)
     @user = User.find(params[:id])
     @heat.user = @user
-    # pushup type and duration set here until support for user selection is added.
-    @heat.pushup_type = "knee"
     @heat.length = 30
+    @heat.count /= 2 if @heat.pushup_type == "knee"
     if @heat.save
       @heat.average_pushups = @heat.calculate_average_pushups
       @heat.save
@@ -30,6 +29,6 @@ class HeatsController < ApplicationController
   private
 
   def heat_params
-    params.require(:heat).permit(:count, :entry_date)
+    params.require(:heat).permit(:count, :entry_date, :pushup_type)
   end
 end
