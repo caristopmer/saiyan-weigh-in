@@ -24,6 +24,11 @@ class Heat < ApplicationRecord
     end
   end
 
+  def raw_count
+    return self.count if self.pushup_type == "toe"
+    self.count * 2
+  end
+
   private
 
   def pushups_averager(heats_array)

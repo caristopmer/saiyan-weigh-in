@@ -35,7 +35,7 @@
   <% end %>
 </div>
 
-<p id="entry-disclaimer">(Note: For most accurate average weight calculation, please make entries in chronological order from oldest to newest)</p>
+<p class="entry-disclaimer">(Note: For most accurate average weight calculation, please make entries in chronological order from oldest to newest)</p>
 
 <% if @errors %>
   <%= render 'layouts/errors' %>
@@ -43,6 +43,7 @@
 
 <div class="weights-container">
   <h3>Weigh-In History</h3>
+  <p class="entry-disclaimer">(Enter your weight each day to track your progress!)</p>
   <ul>
     <% @user.entries.order(entry_date: :desc).limit(5).each do |entry| %>
       <li><%= render entry %></li>
@@ -56,7 +57,7 @@
   <% if @user == current_user %>
     <p>Enter Today's Weight:</p>
     <%= form_for :entry, url: entries_path(@user) do |f| %>
-      <%= f.text_field :weight %> lbs. 
+      <%= f.text_field :weight, size: 6 %> lbs.<br>
       <%= f.date_field :entry_date, value: Date.today %>
       <%= f.submit "Submit" %>
     <% end %>
@@ -65,6 +66,7 @@
 
 <div class="heats-container">
   <h3>Push-Up Heat History</h3>
+  <p class="entry-disclaimer">(Complete as many as you can in 30 seconds, knee push-ups count for half!)</p>
   <ul>
     <% @user.heats.order(entry_date: :desc).limit(5).each do |heat| %>
       <li><%= render heat %></li>
@@ -78,7 +80,7 @@
   <% if @user == current_user %>
     <p>Enter Today's Heat Results:</p>
     <%= form_for :heat, url: heats_path(@user) do |f| %>      
-      <%= f.text_field :count %> completed. 
+      <%= f.text_field :count, size: 4 %> <%= f.select "pushup_type", options_for_select([ "knee", "toe" ], "toe") %>  push-ups completed.<br>
       <%= f.date_field :entry_date, value: Date.today %>
       <%= f.submit "Submit" %>
     <% end %>
@@ -87,6 +89,7 @@
 
 <div class="power-levels-container">
   <h3>Power Levels History</h3>
+  <p class="entry-disclaimer">(Calculate your power level over time and watch it grow!)</p>
   <ul>
     <% @user.power_levels.order(entry_date: :desc).limit(5).each do |power_level| %>
       <li><%= render power_level %></li>
@@ -108,6 +111,7 @@
 
 <div class="teams-container">
   <h3><%= @user.username %>'s Teams</h3>
+  <p class="entry-disclaimer">(Join or create a team and stay motivated with others!)</p>
   <ul>
     <% @user.teams.each do |team| %>
       <li><%= link_to "#{team.name}", team_path(team)%></li>

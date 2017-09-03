@@ -57,9 +57,9 @@ class PowerLevel < ApplicationRecord
 
     last_heat = relevant_heats.first
     if last_heat.pushup_type == "knee"
-      last_heat.count * 100
+      last_heat.count * 90
     else
-      last_heat.count * 175
+      last_heat.count * 180
     end
   end
 end
