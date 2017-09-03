@@ -6,7 +6,8 @@ class HeatsController < ApplicationController
 
   def create
     @heat = Heat.new(heat_params)
-    @heat.user = User.find(params[:id])
+    @user = User.find(params[:id])
+    @heat.user = @user
     # pushup type and duration set here until support for user selection is added.
     @heat.pushup_type = "knee"
     @heat.length = 30

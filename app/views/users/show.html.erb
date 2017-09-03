@@ -87,7 +87,23 @@
 
 <div class="power-levels-container">
   <h3>Power Levels History</h3>
-  <p>Coming Soon!</p>
+  <ul>
+    <% @user.power_levels.order(entry_date: :desc).limit(5).each do |power_level| %>
+      <li><%= render power_level %></li>
+    <% end %>
+  </ul>
+
+  <% if @user.power_levels.count > 5 %>
+    <%= link_to "View All", power_levels_path(@user) %>
+  <% end %>
+
+  <% if @user == current_user %>
+    <p>Calculate Today's Power Level:</p>
+    <%= form_for :power_level, url: power_levels_path(@user) do |f| %>
+      <%= f.date_field :entry_date, value: Date.today %>
+      <%= f.submit "Submit" %>
+    <% end %>
+  <% end %>
 </div>
 
 <div class="teams-container">

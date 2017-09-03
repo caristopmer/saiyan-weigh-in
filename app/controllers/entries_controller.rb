@@ -6,7 +6,8 @@ class EntriesController < ApplicationController
 
   def create
     @entry = Entry.new(entry_params)
-    @entry.user = User.find(params[:id])
+    @user = User.find(params[:id])
+    @entry.user = @user
     @entry.weight_unit = "lbs."
     if @entry.save
       @entry.average_weight = @entry.calculate_average_weight
@@ -14,7 +15,6 @@ class EntriesController < ApplicationController
       redirect_to user_path(@entry.user)
     else
       @errors = @entry.errors.full_messages
-      @user = @entry.user
       render "users/show"
     end
   end

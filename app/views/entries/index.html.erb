@@ -1,6 +1,6 @@
 <h2><%= @user.username %>'s Entries</h2>
 <ul>
-  <% @entries.each do |entry| %>
+  <% @entries.order(entry_date: :desc).each do |entry| %>
     <li><%= render entry %></li>
   <% end %>
 </ul>

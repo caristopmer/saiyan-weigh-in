@@ -17,8 +17,8 @@ class Entry < ApplicationRecord
     recent_entries = entries.where(["entry_date > ?", self.entry_date - 14])
     if entries.count < 3
       weight_averager(entries)
-    elsif !recent_entries || recent_entries.count < 4
-      weight_averager(entries.limit(3))
+    elsif recent_entries.count == 1
+      weight_averager(entries.limit(2))
     else
       weight_averager(recent_entries.limit(6))
     end

@@ -1,0 +1,5 @@
+<p><%= power_level.entry_date.strftime("%-m/%-d/%y") %> Power Level: <%= power_level.level %>  Average: <%= power_level.average_level %>  
+<% if power_level.user == current_user %>
+  <%= link_to "Delete", power_level_path(power_level.user, power_level), method: "delete", data: {confirm: "are you sure you want to delete this power level?"} %>
+<% end %>
+</p>
