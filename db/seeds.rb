@@ -1,5 +1,5 @@
 
-User.create(username: "Guest", email: "guest@guest.com", password: "password", password_confirmation: "password", height: 72, height_unit: "inches")
+User.create(username: "Guest", email: "guest@guest.com", password: "password", password_confirmation: "password", height: 72, height_unit: "inches", gender: "male")
 
 guest_entries = {
   "2016-04-10" => 300.2,
@@ -73,7 +73,7 @@ guest_heats = {
 
 guest_heats.each do |date, count|
   current_heat = Heat.create(user: User.find_by(username: "Guest"), pushup_type: "toe", length: 30, count: count, entry_date: date)
-  current_heat.average_pushups = current_heat.calculate_average_pushups
+  current_heat.average_count = current_heat.calculate_average_count
   current_heat.save
 end
 

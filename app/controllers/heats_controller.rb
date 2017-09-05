@@ -11,7 +11,7 @@ class HeatsController < ApplicationController
     @heat.length = 30
     @heat.count /= 2 if @heat.pushup_type == "knee"
     if @heat.save
-      @heat.average_pushups = @heat.calculate_average_pushups
+      @heat.average_count = @heat.calculate_average_count
       @heat.save
       redirect_to user_path(@heat.user)
     else

@@ -12,7 +12,7 @@ class Heat < ApplicationRecord
     end
   end
 
-  def calculate_average_pushups
+  def calculate_average_count
     heats = self.user.heats.where(["entry_date <= ?", self.entry_date]).order(entry_date: :desc)
     recent_heats = heats.where(["entry_date > ?", self.entry_date - 14])
     if heats.count < 3
