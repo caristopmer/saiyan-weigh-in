@@ -20,7 +20,8 @@ class PowerLevel < ApplicationRecord
     else
       bmi_multiplier = 0.1 * (1 - (((bmi - 36.8) / 36.8) * 2))
     end
-    raw_level * bmi_multiplier
+    power_level = raw_level * bmi_multiplier
+    power_level += pushup_points / 10
   end
 
   def calculate_average_level
