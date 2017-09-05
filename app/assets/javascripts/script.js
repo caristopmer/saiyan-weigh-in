@@ -2,7 +2,7 @@ $(document).ready(function() {
   var displayStat = "weight";
   var displayTime = "1";
 
-  $("#all-time-button").addClass("button-selected");
+  $("#1-month-button").addClass("button-selected");
   $("#weight-button").addClass("button-selected");
 
 

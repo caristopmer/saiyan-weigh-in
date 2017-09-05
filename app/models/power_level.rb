@@ -15,7 +15,11 @@ class PowerLevel < ApplicationRecord
   def calculate_level
     return nil if pushup_points == nil || bmi == nil
     raw_level = 5000 + pushup_points
-    bmi_multiplier = 1 - (((bmi - 22.0).abs / 22.0) * 2)
+    if bmi <= 36.8
+      bmi_multiplier = 1 - (((bmi - 23.0).abs / 23.0) * 1.5)
+    else
+      bmi_multiplier = 0.1 * (1 - (((bmi - 36.8) / 36.8) * 2))
+    end
     raw_level * bmi_multiplier
   end
 
