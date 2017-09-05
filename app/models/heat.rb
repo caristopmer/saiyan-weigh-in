@@ -17,8 +17,8 @@ class Heat < ApplicationRecord
     recent_heats = heats.where(["entry_date > ?", self.entry_date - 14])
     if heats.count < 3
       pushups_averager(heats)
-    elsif recent_heats.count == 1
-      pushups_averager(heats.limit(2))
+    elsif recent_heats.count < 3
+      pushups_averager(heats.limit(3))
     else
       pushups_averager(recent_heats.limit(6))
     end
