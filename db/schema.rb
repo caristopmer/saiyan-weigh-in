@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 20170903180120) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.date "entry_date", null: false
-    t.float "average_pushups"
+    t.float "average_count"
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 20170903180120) do
     t.date "birthdate"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "gender"
+    t.string "gender", null: false
   end
 
 end
