@@ -24,8 +24,8 @@ class PowerLevel < ApplicationRecord
     recent_levels = levels.where(["entry_date > ?", self.entry_date - 14])
     if levels.count < 3
       levels_averager(levels)
-    elsif recent_levels.count == 1
-      levels_averager(levels.limit(2))
+    elsif recent_levels.count < 3
+      levels_averager(levels.limit(3))
     else
       levels_averager(recent_levels.limit(6))
     end
