@@ -41,7 +41,7 @@ class User < ApplicationRecord
         hash["Average Weight"] = self.entries.where(["entry_date >= ?", Date.today - (months * 30)]).pluck(:entry_date, :average_weight)
       elsif stat == "push_ups"
         hash["Push-Ups"] = self.heats.where(["entry_date >= ?", Date.today - (months * 30)]).pluck(:entry_date, :count)
-        hash["Average Push-Ups"] = self.heats.where(["entry_date >= ?", Date.today - (months * 30)]).pluck(:entry_date, :average_pushups)
+        hash["Average Push-Ups"] = self.heats.where(["entry_date >= ?", Date.today - (months * 30)]).pluck(:entry_date, :average_count)
       elsif stat == "power_levels"
         hash["Power Level"] = self.power_levels.where(["entry_date >= ?", Date.today - (months * 30)]).pluck(:entry_date, :level)
         hash["Average Power Level"] = self.power_levels.where(["entry_date >= ?", Date.today - (months * 30)]).pluck(:entry_date, :average_level)
@@ -52,7 +52,7 @@ class User < ApplicationRecord
         hash["Average Weight"] = self.entries.pluck(:entry_date, :average_weight)
       elsif stat == "push_ups"
         hash["Push-Ups"] = self.heats.pluck(:entry_date, :count)
-        hash["Average Push-Ups"] = self.heats.pluck(:entry_date, :average_pushups)
+        hash["Average Push-Ups"] = self.heats.pluck(:entry_date, :average_count)
       elsif stat == "power_levels"
         hash["Power Level"] = self.power_levels.pluck(:entry_date, :level)
         hash["Average Power Level"] = self.power_levels.pluck(:entry_date, :average_level)

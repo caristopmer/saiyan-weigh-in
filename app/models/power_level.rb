@@ -56,6 +56,6 @@ class PowerLevel < ApplicationRecord
     return nil if relevant_heats.count == 0
 
     last_heat = relevant_heats.first
-    last_heat.count * 180
+    last_heat.average_count * 180
   end
 end
