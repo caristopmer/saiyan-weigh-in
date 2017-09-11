@@ -1,24 +1,21 @@
-# README
+# Saiyan Weigh-In
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+**Project hosted on Heroku: [Saiyan Weigh-In](https://saiyan-weigh-in.herokuapp.com/)**
 
-Things you may want to cover:
+### Project Description
 
-* Ruby version
+Saiyan Weigh-In is a weight loss and general fitness tracking application. Users can enter their weight each day and see their progress charted over time. Users may also complete 30-second "heats" of push ups as an additional means of tracking general fitness improvement.
 
-* System dependencies
+An additional feature, and 
 
-* Configuration
 
-* Database creation
+description of site purpose
 
-* Database initialization
+features
 
-* How to run the test suite
+tech stack
 
-* Services (job queues, cache servers, search engines, etc.)
+developer
 
-* Deployment instructions
+things to add
 
-* ...
