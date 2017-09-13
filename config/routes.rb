@@ -5,8 +5,14 @@ Rails.application.routes.draw do
   post '/sessions' => 'sessions#create'
   delete '/sessions' => 'sessions#destroy'
 
+  get '/users' => 'users#index', as: "users"
+  post '/users' => 'users#create'
+  get '/users/new' => 'users#new', as: "new_user"
   get '/users/:id' => 'users#show', as: "user"
-
+  put '/users/:id' => 'users#update'
+  get '/users/:id/edit' => 'users#edit', as: "edit_user"
+  delete '/users/:id' => 'users#destroy'
+  
   get '/users/:id/entries/new' => 'entries#new', as: "new_entry"
   get '/users/:id/entries' => 'entries#index', as: "entries"
   post '/users/:id/entries' => 'entries#create'
