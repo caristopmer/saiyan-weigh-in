@@ -20,6 +20,12 @@ Users are also given the ability to create or join teams for those who perform b
 
 * Utilize javascript to perform weight, heat, and power level entries more fluidly without page refresh; make the user profile a single page application.
 
+* Overhaul of application front-end to be more fluid and utilize a CSS framework, or potentially explore React.
+
+* Implement continuous integration and write unit tests to ensure back-end functionality.
+
+* Re-factor back-end code following implementation of testing for more elegance and simplicity.
+
 * Accompanying mobile application.
 
 ### About
