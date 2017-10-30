@@ -24,7 +24,8 @@ h2, h3 {
 }
 
 #navigation {
-  width: 25%;
+  width: 30%;
+  min-width: 300px;
   list-style-type: none;
   margin-left: 7%;
   padding: 5px;
@@ -109,8 +110,8 @@ footer {
 }
 
 .weights-container, .heats-container, .teams-container, .power-levels-container {
-  display: inline-block;
-  width: 49%;
+  display: block;
+  width: 100%;
   vertical-align: top;
   text-align: center;
   border: 1px solid black;
@@ -137,4 +138,11 @@ footer {
   border-right: 2px solid black;
   padding-right: 12px;
   margin-right: 5px;
+}
+
+@media screen and (min-width: 800px) {
+  .weights-container, .heats-container, .teams-container, .power-levels-container {
+  display: inline-block;
+  width: 49%;
+  }
 }
