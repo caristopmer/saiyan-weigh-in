@@ -66,7 +66,7 @@
 
 <div class="heats-container">
   <h3>Push-Up Heat History</h3>
-  <p class="entry-disclaimer">(Complete as many as you can in 30 seconds, knee push-ups count for half!)</p>
+  <p class="entry-disclaimer">(Do as many as you can in 30 sec., knee push-ups count for half!)</p>
   <ul>
     <% @user.heats.order(entry_date: :desc).limit(5).each do |heat| %>
       <li><%= render heat %></li>
