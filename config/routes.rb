@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   get '/login' => 'sessions#new', as: "new_session"
-  post '/sessions' => 'sessions#create'
+  post '/sessions' => 'sessions#create', as: "sessions"
   delete '/sessions' => 'sessions#destroy'
 
   get '/users' => 'users#index', as: "users"
